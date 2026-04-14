@@ -47,7 +47,7 @@ public class AuthController {
         authenticationService.register(request);
         return new  ResponseEntity<>(
                 new SuccessResponse(
-                HttpStatus.CONTINUE.value(),
+                HttpStatus.CREATED.value(),
                 "User Created Successfully",
                 null
                 ),
