@@ -7,6 +7,7 @@ import com.blog.Blog_app.service.AuthenticationService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class AuthenticateServiceImpl implements AuthenticationService {
 
     @Autowired
@@ -70,7 +72,7 @@ public class AuthenticateServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void register(RegisterRequest request) {
+    public String  register(RegisterRequest request) {
         if(userRepository.findByEmail(request.getEmail()).isPresent()){
             throw new IllegalStateException("User Already Exist with email : " + request.getEmail());
         }
@@ -82,6 +84,9 @@ public class AuthenticateServiceImpl implements AuthenticationService {
                 .build();
 
         userRepository.save(user);
+
+        UserDetails userDetails = authenticate(user.getEmail(), request.getPassword());
+        return generateToken(userDetails);
     }
 
     private String extractUserName(String token){
