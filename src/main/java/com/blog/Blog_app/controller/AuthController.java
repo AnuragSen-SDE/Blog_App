@@ -44,12 +44,12 @@ public class AuthController {
     public ResponseEntity<SuccessResponse> register(
             @RequestBody RegisterRequest request
             ) {
-        authenticationService.register(request);
+        String token = authenticationService.register(request);
         return new  ResponseEntity<>(
                 new SuccessResponse(
-                HttpStatus.CONTINUE.value(),
+                HttpStatus.CREATED.value(),
                 "User Created Successfully",
-                null
+                token
                 ),
                 HttpStatus.CREATED
         );
