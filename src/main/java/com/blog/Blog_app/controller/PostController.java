@@ -9,6 +9,7 @@ import com.blog.Blog_app.mapper.PostMapper;
 import com.blog.Blog_app.service.PostService;
 import com.blog.Blog_app.utils.HexToUUIDConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
